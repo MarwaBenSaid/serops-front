@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Styles/Register.css';
+import RegisterPart2 from './RegisterPart2';
 function RegisterPart1(){
 
     return(
@@ -40,7 +41,7 @@ function RegisterPart1(){
                                
 
                                 <div className="mb-2 text-center ">
-                                    <button className="btn mb-3 text-center" type="submit"> Continue </button>
+                                    <button className="btn mb-3 text-center" type="submit" onClick={<RegisterPart2/>}> Continue </button>
                                 </div>
 								
                                 

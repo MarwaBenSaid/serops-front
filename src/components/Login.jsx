@@ -1,59 +1,9 @@
-import React from 'react';
-import '../Styles/Register.css';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
-
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000"
-});
-
-function Login() {
-
-  const [currentUser, setCurrentUser] = useState();
- const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    client.get("/auth")
-    .then(function(res) {
-      setCurrentUser(true);
-    })
-    .catch(function(error) {
-      setCurrentUser(false);
-    });
-  }, []);
-
-
-
-  function submitLogin(e) {
-    e.preventDefault();
-    client.post(
-      "/auth/login",
-      {
-        email: email,
-        password: password
-      }
-    ).then(function(res) {
-      setCurrentUser(true);
-    });
-  }
-
-
-  if (currentUser) {
+import React, {useContext} from 'react'
+import AuthContext from '../Context/AuthContext'
+import '../Styles/Register.css'
+const Login = () => {
+  let {loginUser} = useContext(AuthContext)
     return (
-      <div>
-        
-  
-          <div className="center">
-            <h2>You're logged in!</h2>
-          </div>
-        </div>
-    );
-  }
-  return (
     <div className="container-register">
       <div className="card-login border-light">
         <div className="row justify-content-center">
@@ -61,19 +11,19 @@ function Login() {
             <div className="padding mt-3">
               <h2 className="text-center">Welcome back</h2>
               <p className="lead text-center mt-2">Welcome back! Please enter your details.</p>
-              <form className="justify-content-center mt-3" autoComplete="off">
+              <form className="justify-content-center mt-3" onSubmit={loginUser} >
                 <div className="mb-2">
-                  <label htmlFor="emailaddress" className="form-label">
-                    Email address
+                  <label htmlFor="username" className="form-label">
+                    Username
                   </label>
                   <input
                     className="form-control"
-                    type="email"
-                    id="emailaddress"
+                    type="text"
+                    id="username"
                     required
                     placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                   
+                    
                   />
                 </div>
                 <div className="mb-2">
@@ -85,15 +35,14 @@ function Login() {
                     id="password"
                     className="form-control"
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                   
                   />
                 </div>
                 <div className="mt-2 link1">
                   <a href="">Forget your password</a>
                 </div>
                 <div className="mb-2 text-center">
-                  <button className="btn mb-3 text-center" type="submit" s>
+                  <button  className="btn mb-3 text-center" type="submit">
                     Sign up
                   </button>
                 </div>

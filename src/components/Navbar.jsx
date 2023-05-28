@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react'
+import { Link ,useNavigate} from 'react-router-dom'
+import AuthContext from '../Context/AuthContext';
 import "../Styles/Navbar.css";
-import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
 function Navbar()  {
+  
+  let {user, logoutUser}=useContext(AuthContext)
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
@@ -30,10 +33,13 @@ function Navbar()  {
             <Icon className="icon" icon="mdi:user" />
                Profile
              </a>
-            <a className="dropdown-item" onClick={() => navigate('/Login')} >
-            <Icon className="icon" icon="ri:logout-box-line" />
+             {user ? (
+             <a className="dropdown-item" onClick={logoutUser}>
+             <Icon className="icon" icon="ri:logout-box-line" />
                Logout
-              </a>
+             </a>) : (
+            <Link  to="/login"/> 
+            )}
           </div>
         </li>
       </ul>

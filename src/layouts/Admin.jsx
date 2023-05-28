@@ -1,17 +1,22 @@
 import React from "react";
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import Dashboard from "../pages/Dashboard";
+import {Outlet} from "react-router-dom";
 
 const Admin = (props) => {
   
   return (
     
-  <React.Fragment>
-    <Navbar/>
+  <div>
+<Navbar/>
 <Sidebar>
-    {this.props.children}
+
+<Outlet/>
 </Sidebar>
-  </React.Fragment>    
+  </div>  
+  
+
        
   );
 };

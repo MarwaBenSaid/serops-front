@@ -1,12 +1,19 @@
 import React from "react";
-
+import {Outlet} from "react-router-dom";
+import "../Styles/Register.css"
 const Auth = (props) => {
   
   return (
     
-  <React.Fragment>
-    {this.props.children}
-  </React.Fragment>    
+  
+    <div >
+            <Outlet/>
+          
+    </div>
+
+  
+  
+
        
   );
 };
