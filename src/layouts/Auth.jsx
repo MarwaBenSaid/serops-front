@@ -7,7 +7,7 @@ const Auth = (props) => {
     
   
     <div >
-            <Outlet/>
+            
           
     </div>
 

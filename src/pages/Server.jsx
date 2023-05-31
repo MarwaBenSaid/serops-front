@@ -1,14 +1,8 @@
 import React , { useState } from 'react';
 import {
-  Button,
   Modal,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
   Input,
-  Label,
-  Form,
-  FormGroup,
 } from 'reactstrap';
 import "../Styles/List.css";
 import "../Styles/Add.css";

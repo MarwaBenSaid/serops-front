@@ -1,22 +1,13 @@
 import React , { useState } from 'react';
-import { RiUserLine , RiSettings4Line } from 'react-icons/ri';
-import { Dropdown } from 'react-bootstrap';
 import {
-  Button,
   Modal,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
-  Input,
-  Label,
-  Form,
-  FormGroup,
+  Input
 } from 'reactstrap';
 import "../Styles/List.css";
 import "../Styles/Add.css";
 import "../Styles/Code.css"
 import { Icon } from '@iconify/react';
-import { FaUser } from 'react-icons/fa';
 export default function User
 () {  const [modal, setModal] = useState(false);
     const [unmountOnClose, setUnmountOnClose] = useState(true);

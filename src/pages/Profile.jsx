@@ -6,7 +6,6 @@ import { FaCamera } from 'react-icons/fa';
 function Profile(params) {
     const [isEditing, setIsEditing] = useState(false);
     const handleEditPicture = () => {
-        // Logic to handle editing the profile picture
         console.log('Editing profile picture');
       };
     return(

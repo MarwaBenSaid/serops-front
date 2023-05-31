@@ -1,15 +1,20 @@
-import React, { useState , useContext } from 'react'
-import { Link ,useNavigate} from 'react-router-dom'
-import AuthContext from '../Context/AuthContext';
+import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import "../Styles/Navbar.css";
 import { Icon } from '@iconify/react';
+import AuthService from "../utils/auth.service";
 
 function Navbar()  {
-  
-  let {user, logoutUser}=useContext(AuthContext)
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+  const logout = (e) => {
+    AuthService.logout()  
+    navigate('/login')
+  
+  }
+
+  
 
   
   const toggleDropdown = () => {
@@ -21,8 +26,8 @@ function Navbar()  {
 
   return (
     <nav className="navbar">
-      <ul className="navbar-nav">
-        <li className={`nav-item ${dropdownOpen ? 'show' : ''}`} style={{ position: 'relative' }}>
+      <ul className="navbar-nav"> 
+        <li className={`nav-item ${dropdownOpen ? 'show' : ''}`} style={{ position: 'relative' }}   >
           <a className="nav-link  dropbtn dropdown-toggle" href="#" id="userDropdown" role="button" onClick={toggleDropdown}
             data-toggle="dropdown" aria-haspopup="true" aria-expanded={dropdownOpen ? 'true' : 'false'}>
             <span className="mr-2 d-none d-lg-inline account-user-name text-gray-600 small">foulen ben foulen</span>
@@ -33,13 +38,14 @@ function Navbar()  {
             <Icon className="icon" icon="mdi:user" />
                Profile
              </a>
-             {user ? (
-             <a className="dropdown-item" onClick={logoutUser}>
+            
+             <a className="dropdown-item" onClick={logout} >
              <Icon className="icon" icon="ri:logout-box-line" />
-               Logout
-             </a>) : (
-            <Link  to="/login"/> 
-            )}
+               Logout </a>
+
+        
+      
+          
           </div>
         </li>
       </ul>

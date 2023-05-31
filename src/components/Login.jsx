@@ -1,8 +1,47 @@
-import React, {useContext} from 'react'
-import AuthContext from '../Context/AuthContext'
+import React, {
+  useState, useEffect
+} from "react";
 import '../Styles/Register.css'
-const Login = () => {
-  let {loginUser} = useContext(AuthContext)
+import { useNavigate } from 'react-router-dom';
+import AuthService from "../utils/auth.service";
+const Login = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  
+
+
+const submit = (e) => {
+    setLoading(true);
+    setError('');
+
+    e.preventDefault();
+    AuthService.login(email, password)
+        .then((response) => {
+            console.log(response)
+            if (response.data.token) {
+                localStorage.setItem("token", JSON.stringify(response.data.token));
+            }
+            if (response.data.user) {
+                localStorage.setItem("admin", JSON.stringify(response.data.user));
+            }
+
+            navigate('/dashboard');
+        }).catch((error) => {
+            console.log(error.response.data.message)
+            setError(error.response.data.message);
+            setLoading(false);
+        })
+}
+  const navigate = useNavigate();
+  const handleSignupClick = (event) => {
+    navigate('/sign1');
+    event.preventDefault();
+  };
+
+  
+
     return (
     <div className="container-register">
       <div className="card-login border-light">
@@ -11,38 +50,39 @@ const Login = () => {
             <div className="padding mt-3">
               <h2 className="text-center">Welcome back</h2>
               <p className="lead text-center mt-2">Welcome back! Please enter your details.</p>
-              <form className="justify-content-center mt-3" onSubmit={loginUser} >
+              <form className="justify-content-center mt-3" onSubmit = {
+            submit }>
                 <div className="mb-2">
-                  <label htmlFor="username" className="form-label">
+                  <label htmlFor="email" className="form-label">
                     Username
                   </label>
-                  <input
+                  <input onChange ={(e) => 
+    setEmail(e.target.value)}
                     className="form-control"
                     type="text"
-                    id="username"
-                    required
+                    id="email"
                     placeholder="Enter your email"
                    
-                    
                   />
                 </div>
                 <div className="mb-2">
                   <label htmlFor="password" className="form-label">
                     Password
                   </label>
-                  <input
+                  <input  onChange ={(e) => 
+    setPassword(e.target.value)}
                     type="password"
                     id="password"
                     className="form-control"
                     placeholder="Enter your password"
-                   
+                    
                   />
                 </div>
                 <div className="mt-2 link1">
-                  <a href="">Forget your password</a>
+                  <a >Forget your password</a>
                 </div>
                 <div className="mb-2 text-center">
-                  <button  className="btn mb-3 text-center" type="submit">
+                  <button className="btn mb-3 text-center" type="submit">
                     Sign up
                   </button>
                 </div>
@@ -54,7 +94,7 @@ const Login = () => {
                 </div>
                 <div className="mb-2">
                   <p className="lead p1">
-                    Don’t have an account? <a href="/sign1" className="link2">Sign up</a>
+                    Don’t have an account? <a  className="link2" onClick={handleSignupClick}>Sign up</a>
                   </p>
                 </div>
               </form>
