@@ -1,3 +1,14 @@
+.container-project {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 170vh;
+  height: 90vh;
+  margin-left: 80px;
+  margin-top: 50px !important;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
 
   .title-project{
   position: absolute;
@@ -83,22 +94,43 @@
   }
   
   .project-card {
-    
-    width: 270px;
-    height: 150px;
+    box-sizing: border-box;
+    position: relative;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 16px 20px;
+
+width: 272px;
+height: 150px;
+
+/* White */
+
+background: #FFFFFF;
+/* Foundation /Primary/primary-200 */
+
+border: 1px solid #99ABF0;
+border-radius: 20px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
     margin: 16px;
-    padding: 16px;
-    background-color: #ffffff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     
-    border: 1px solid #99ABF0;
     border-radius: 20px;
     margin-top: 0;
   }
   
   .project-card h5 {
     width: 120px;
-  height: 20px;
+  height: 27px;
   
   font-family: 'Poppins';
   font-style: normal;
@@ -110,7 +142,7 @@
   color: #2B47D6;
   flex: none;
   order: 0;
-  margin-left: 10px;
+  left: 0px;
   white-space: nowrap;
   }
   
@@ -139,9 +171,70 @@
     justify-items:flex-end
     
   }
-  .icon-card{
-    
+
+  .container-project .project-card .icon-card {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin-right: 10px; /* Adjust this value as needed for spacing */
     white-space: nowrap;
-    width: 10px;
-    height: 10px;
+    Width :20.01px;
+    Height:18.88px;
+    margin-left: 0;
+    cursor: pointer;
   }
+  
+  .container-project .project-dropdown {
+    position: absolute;
+    top: 10; /* Position the dropdown below the icon */
+    right: 30px; /* Adjust this value to position the dropdown as desired */
+    transform: translateY(0);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 125px;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid #99ABF0;
+    background-color: white;
+    color: #2B47D6;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .container-project .drop-menu {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    gap: 8px;
+    
+    width: 125px;
+    height: 40px;
+    flex: none;
+    order: 0;
+   
+  align-self: stretch;
+  flex-grow: 0;
+  cursor: pointer;
+    }
+    .container-project .dropdown-item{
+        
+      width: 100%;
+      height: 100%;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2B47D6;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+    }

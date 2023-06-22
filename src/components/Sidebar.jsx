@@ -6,9 +6,13 @@ import {
     FaCodeBranch,
     FaProjectDiagram,
     FaUsers,
-    FaServer
+    FaServer,
+    FaBoxes
 }from "react-icons/fa";
+import { ImOffice} from "react-icons/im";
+import {  AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { NavLink } from 'react-router-dom';
+import Navbar from './Navbar';
 
 
 const Sidebar = ({children}) => {
@@ -24,8 +28,13 @@ const Sidebar = ({children}) => {
         {
             path:"/projects",
             name:"Project",
-            icon:<FaProjectDiagram/>
+            icon:<AiOutlineFundProjectionScreen/>
                     
+        }, 
+        {
+            path:"/organisations",
+            name:"Company",
+            icon:<ImOffice/>
         },
         {
             path:"/code",
@@ -33,20 +42,20 @@ const Sidebar = ({children}) => {
             icon:<FaCodeBranch/>
         },
         {
-            path:"/server",
+            path:"/servers",
             name:"Servers",
             icon:<FaServer/>
         },
         
         {
-            path:"/user",
+            path:"/users",
             name:"Users",
             icon:<FaUsers/>
         }
     ]
     return (
         <div className="container">
-           <div style={{width: isOpen ? "230px" : "50px"}} className="sidebar">
+           <div style={{width: isOpen ? "230px" : "50px"}} className="sidebar js-sidebar-scroll">
                <div className="top_section">
                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo-sidebar">
    
@@ -60,7 +69,7 @@ const Sidebar = ({children}) => {
                </div>
                {
                    menuItem.map((item, index)=>(
-                       <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                       <NavLink to={item.path} key={index} className="link" activeclassname="active">
                            <div>{item.icon}</div>
                            <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
                        </NavLink>
@@ -70,7 +79,9 @@ const Sidebar = ({children}) => {
                    ))
                }
            </div>
-           <main>{children}</main>
+           <main >
+            <Navbar/>
+            {children}</main>
         </div>
     );
 };

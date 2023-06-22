@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import {Outlet} from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import AuthService from "../services/auth.service";
 
-const Admin = (props) => {
-  
-  return (
+const Admin = () => {
+    return (
+      
+      <div>
+        <Sidebar>
+          <Outlet />
+        </Sidebar>
+      </div>
+    );
+    }
     
-<div>
-<Navbar/>
-<Sidebar>
-<Outlet/>
-</Sidebar>
-</div>
   
-
-       
-  );
-};
 
 export default Admin;

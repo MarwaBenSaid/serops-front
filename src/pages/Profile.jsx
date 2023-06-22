@@ -1,13 +1,25 @@
-import React , { useState }  from "react";
+import React , { useEffect, useState }  from "react";
 import '../Styles/Profil.css';
 import { FaCamera } from 'react-icons/fa';
+import AuthService from "../services/auth.service";
+import ProfileService from "../services/profile.service";
 
 
-function Profile(params) {
-    const [isEditing, setIsEditing] = useState(false);
-    const handleEditPicture = () => {
-        console.log('Editing profile picture');
-      };
+function Profile() {
+  
+
+
+useEffect(() => {
+    ProfileService.getOne(AuthService.getUser()._id)
+    .then((res) => {
+      console.log("Response data:", res.data);;
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+    });
+}, []);
+  
+  
     return(
 <div>
 <div className="container-fluid">
@@ -15,11 +27,8 @@ function Profile(params) {
        <div className="card-profil">
          <div className="">
            <img className="img1" src="../assets/images/users/avatar-10.jpg" alt="Profile photo" />
-           {isEditing && (
-          <div className="edit-overlay">
-            <FaCamera className="camera-icon" onClick={handleEditPicture} />
-          </div>
-        )}
+          
+      
           </div>
           
              
@@ -31,24 +40,24 @@ function Profile(params) {
                  <form autocomplete="off">
                                    <div className="mb-2">
                                        <label for="firstname" className="form-label">First name</label>
-                                       <input className="form-control" type="text" id="firstname" required="" placeholder="Enter your first name" />
+                                       <input className="form-control" type="text" id="first_name"  />
                                    </div>
                                    <div className="mb-2">
                                        <label for="lastname" className="form-label">Last name</label>
-                                       <input className="form-control" type="text" id="lastname" required="" placeholder="Enter your last name" />
+                                       <input className="form-control" type="text" id="lastname" />
                                    </div>
                                    <div className="mb-2">
                                        <label for="emailaddress" className="form-label">Email address</label>
-                                       <input className="form-control" type="email" id="emailaddress" required="" placeholder="Enter your email" />
+                                       <input className="form-control" type="email" id="email" />
                                    </div>
                                    <div className="mb-2">
                                        <label for="companyname" className="form-label">Company name</label>
-                                       <input className="form-control" type="text" id="companyname" required="" placeholder="Enter your company name" />
+                                       <input className="form-control" type="text" id="organisation"  />
                                    </div>
    
                                    <div className="mb-2">
                                        <label for="phonenumber" className="form-label">Phone Number</label>
-                                       <input className="form-control" type="number" id="phonenumber" required="" placeholder="+216 | Enter your Phone Number" />
+                                       <input className="form-control" type="number" id="phone"  />
                                    </div>
                                    
    

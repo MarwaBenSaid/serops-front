@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import '../Styles/Register.css'
 import { useNavigate } from 'react-router-dom';
-import AuthService from "../utils/auth.service";
+import AuthService from "../services/auth.service";
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,17 +18,13 @@ const submit = (e) => {
 
     e.preventDefault();
     AuthService.login(email, password)
-        .then((response) => {
-            console.log(response)
-            if (response.data.token) {
-                localStorage.setItem("token", JSON.stringify(response.data.token));
-            }
-            if (response.data.user) {
-                localStorage.setItem("admin", JSON.stringify(response.data.user));
-            }
-
-            navigate('/dashboard');
-        }).catch((error) => {
+        .then(response => {
+            console.log(response.data)
+                localStorage.setItem("token", response.data.token);
+                navigate('/')
+            })
+  
+        .catch((error) => {
             console.log(error.response.data.message)
             setError(error.response.data.message);
             setLoading(false);
@@ -36,7 +32,7 @@ const submit = (e) => {
 }
   const navigate = useNavigate();
   const handleSignupClick = (event) => {
-    navigate('/sign1');
+    navigate('/register');
     event.preventDefault();
   };
 
@@ -47,14 +43,13 @@ const submit = (e) => {
       <div className="card-login border-light">
         <div className="row justify-content-center">
           <div className="col-lg-6 col-md-12">
-            <div className="padding mt-3">
+            <div className="padding mt-5">
               <h2 className="text-center">Welcome back</h2>
               <p className="lead text-center mt-2">Welcome back! Please enter your details.</p>
-              <form className="justify-content-center mt-3" onSubmit = {
-            submit }>
+              <form className="justify-content-center mt-3" onSubmit = {submit }>
                 <div className="mb-2">
                   <label htmlFor="email" className="form-label">
-                    Username
+                    Email
                   </label>
                   <input onChange ={(e) => 
     setEmail(e.target.value)}

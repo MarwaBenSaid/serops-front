@@ -1,81 +1,109 @@
 import React from 'react';
-import '../Styles/Register.css';
-import RegisterPart2 from './RegisterPart2';
-function RegisterPart1(){
 
-    return(
-        <div>
-        
-<div className="container-register mt-0">
-		<div className="card-login border-light ">
-     
-				<div className="row justify-content-center">
-                    <div className="col-lg-6 col-md-12">
-						<div className="padding">
-                        <h2 className=" text-center ">Sign up</h2>
-							
-							<form autocomplete="off">
-                               
-                            <div className="mb-2">
-                                    <label for="firstname" className="form-label">First name</label>
-                                    <input className="form-control" type="text" id="firstname" required="" placeholder="Enter your first name" />
-                                </div>
-                                <div className="mb-2">
-                                    <label for="lastname" className="form-label">Last name</label>
-                                    <input className="form-control" type="text" id="lastname" required="" placeholder="Enter your last name" />
-                                </div>
-                                <div className="mb-2">
-                                    <label for="emailaddress" className="form-label">Email address</label>
-                                    <input className="form-control" type="email" id="emailaddress" required="" placeholder="Enter your email" />
-                                </div>
-                                <div className="mb-2">
-                                    <label for="companyname" className="form-label">Company name</label>
-                                    <input className="form-control" type="text" id="companyname" required="" placeholder="Enter your company name" />
-                                </div>
+function RegisterPart1({ formData, setFormData }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      user: {
+        ...prevFormData.user,
+        [name]: value,
+      },
+    }));
+  };
 
-                                <div className="mb-2">
-                                    <label for="phonenumber" className="form-label">Phone Number</label>
-                                    <input className="form-control" type="number" id="phonenumber" required="" placeholder="+216 | Enter your Phone Number" />
-                                </div>
-
-                               
-
-                                <div className="mb-2 text-center ">
-                                    <button className="btn mb-3 text-center" type="submit" onClick={<RegisterPart2/>}> Continue </button>
-                                </div>
-								
-                                
-                                 
-								
-							</form>
-						</div>
-                        
-					</div>
-					<div className="col-lg-6 col-md-12">
-                        <div className="padding  align-items-center ser ">
-
-                                     <img src="../assets/images/Serops-Logo.png" alt="" className="logo " />    
-                                     <img src="./assets/images/Serops-img.png" alt=""   className='img-ser'/>    
-						
-                                    
-							
-							
-								
-							
-
-					
-						</div>
-					</div>
-					
-				</div>
-            </div>
-    
-			</div>
-		
-            </div>
-	
- 
-   )
+  return (
+    <div>
+      {/* First name field */}
+      <div className="mb-2">
+        <label htmlFor="first_name" className="form-label">
+          First name
+        </label>
+        <input
+          className="form-control"
+          type="text"
+          id="first_name"
+          name="first_name"
+          required
+          placeholder="Enter your first name"
+          value={formData.user.first_name}
+          onChange={handleInputChange}
+        />
+      </div>
+      {/* Last name field */}
+      <div className="mb-2">
+        <label htmlFor="last_name" className="form-label">
+          Last name
+        </label>
+        <input
+          className="form-control"
+          type="text"
+          id="last_name"
+          name="last_name"
+          required
+          placeholder="Enter your last name"
+          value={formData.user.last_name}
+          onChange={handleInputChange}
+        />
+      </div>
+      {/* Email field */}
+      <div className="mb-2">
+        <label htmlFor="emailaddress" className="form-label">
+          Email address
+        </label>
+        <input
+          className="form-control"
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="Enter your email"
+          value={formData.user.email}
+          onChange={handleInputChange}
+        />
+      </div>
+      {/* Company name field */}
+      <div className="mb-2">
+        <label htmlFor="organisation" className="form-label">
+          Company name
+        </label>
+        <input
+          className="form-control"
+          type="text"
+          id="organisation"
+          name="organisation"
+          required
+          placeholder="Enter your company name"
+          value={formData.organisation.name}
+          onChange={(e) => {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              organisation: {
+                ...prevFormData.organisation,
+                name: e.target.value,
+              },
+            }));
+          }}
+        />
+      </div>
+      {/* Phone number field */}
+      <div className="mb-2">
+        <label htmlFor="phone" className="form-label">
+          Phone Number
+        </label>
+        <input
+          className="form-control"
+          type="text"
+          id="phone"
+          name="phone"
+          required
+          placeholder="+216 | Enter your Phone Number"
+          value={formData.user.phone}
+          onChange={handleInputChange}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default RegisterPart1;

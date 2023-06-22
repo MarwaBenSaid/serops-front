@@ -1,59 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Modal, ModalBody, Input } from 'reactstrap';
 import { Icon } from '@iconify/react';
+import ProjectService from '../services/project.service';
+import { useNavigate } from 'react-router-dom';
 
 const Project = () => {
   const [modal, setModal] = useState(false);
   const [unmountOnClose, setUnmountOnClose] = useState(true);
-  const [projects, setProjects] = useState([]);
-
   const toggle = () => setModal(!modal);
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [organisation, setOrganisation] = useState("");
+  const [id, setProjectId] = useState(null); // Store the ID of the project being updated
+  const [reloadProjects, setReloadProjects] = useState(false);
+
+  const navigate = useNavigate();
+    // Dropdown state
+    const [showDropdown, setShowDropdown] = useState(Array(projects.length).fill(false));
+    const [selectedProject, setSelectedProject] = useState(null);
+  
+
+
+
   const changeUnmountOnClose = (e) => {
     let { value } = e.target;
     setUnmountOnClose(JSON.parse(value));
   };
-
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/projects/all', {
-          headers: {
-            Authorization: 'Bearer <4c093551eb6819572d98d561cdecb004530865f7>',
-          },
-        });
-        setProjects(response.data);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
-  const handleAddProject = async () => {
-    // Assuming you have form data for the new project
-    const newProjectData = {
-      name: 'New Project',
-      description: 'Project description',
-    };
-
-    try {
-      const response = await axios.post('http://localhost:8000/projects/new', newProjectData, {
-        headers: {
-          Authorization: 'Bearer <4c093551eb6819572d98d561cdecb004530865f7>',
-        },
+    ProjectService.getAll()
+      .then((res) => {
+        console.log("Response data:", res.data);
+        setProjects(res.data);
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        setError(err.message);
       });
-      console.log('New project added:', response.data);
-      // Optionally, you can update the projects state with the newly added project
-      setProjects([...projects, response.data]);
-    } catch (error) {
-      console.error('Error adding new project:', error);
-    }
+  }, [reloadProjects]);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
 
-    toggle();
-
+    const projectData = {
+      name: name,
+      type: type,
+      organisation: organisation
+    };
+      // Create new project
+      ProjectService.add(projectData)
+        .then(response => {
+          console.log('Project added successfully:', response.data);
+          setReloadProjects(true);
+          toggle(); // Close the modal
+        })
+        .catch(error => {
+          console.error('Error adding project:', error);
+        });
+    
   };
+
+
+  // Delete server
+  const handleRemove = (project) => {
+    ProjectService.deleteOne(project.id)
+      .then(response => {
+        console.log('Project deleted successfully:', response.data);
+        setReloadProjects(true);
+      })
+      .catch(error => {
+        console.error('Error deleting server:', error);
+      });
+  };
+  const handleApp = (project) => {
+    navigate(`/projects/applications`);
+  };
+  const handleUpdate = (project) => {
+    navigate(`/projects/update`);
+  };
+
 
   return (
     <div>
@@ -67,8 +92,6 @@ const Project = () => {
               </i>
               Add new Project
             </button>
-
-            {/* Rest of the code */}
             <div className="search-container">
               <Input
                 type="text"
@@ -79,45 +102,104 @@ const Project = () => {
               />
             </div>
             <div className="project-list">
-              {projects.map((project) => (
-                <div className="project-card" key={project.id}>
-                  <h5 className="card-title row">
-                    {project.name}
-                    <i className="icon-card">
-                      <Icon icon="uiw:setting" />
-                    </i>
-                  </h5>
-                  <p>{project.description}</p>
-                </div>
-              ))}
+              {projects &&
+                projects.map((proj,index) => {
+                  return (
+                    <div className="project-card" key={proj.id}>
+                      <h5 className="card-title row">
+                        {proj.name}
+                        <i className="icon-card"onClick={() => {
+                    const updatedShowDropdown = [...showDropdown];
+                    updatedShowDropdown[index] = !updatedShowDropdown[index];
+                    setShowDropdown(updatedShowDropdown);
+                    setSelectedProject(proj);
+                  }}>
+                          <Icon icon="uiw:setting" />
+                        </i>
+                      </h5>
+                      <p>{proj.type}</p>
+                    
+                  {showDropdown[index] && selectedProject && (
+                    <div className='project-dropdown'>
+                      <ul className='drop-menu'> 
+                      <li  className="dropdown-item " onClick={() => handleUpdate(selectedProject)}> 
+                      <Icon icon="el:edit" />
+                       Update
+                        </li>
+                        <li  className="dropdown-item " onClick={() => handleRemove(selectedProject)}> 
+                        <Icon icon="ph:trash" />
+                        Remove
+                        </li>
+                        <li  className="dropdown-item " onClick={() => handleApp(selectedProject)}> 
+                       Applications
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                  
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
       </div>
-
-      <Modal className="model mt-0" isOpen={modal} toggle={toggle} unmountOnClose={unmountOnClose}>
+      <Modal
+        className="model mt-0"
+        isOpen={modal}
+        toggle={toggle}
+        unmountOnClose={unmountOnClose}
+      >
         <ModalBody className="model-body mt-0">
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <div className="mb-2">
               <label htmlFor="ControlInput" className="form-label">
                 Project Name
               </label>
-              <Input className="form-control-model" type="text" id="project-name" name="project-name" />
+              <Input
+                className="form-control-model"
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div className="mb-2">
               <label htmlFor="exampleFormControlTextarea1" className="form-label">
-                Description
+                Type
               </label>
-              <Input type="textarea" className="form-control-model textarea" id="project-description" name="project-description" rows="3" />
+              <Input
+                type="textarea"
+                className="form-control-model textarea"
+                id="type"
+                name="type"
+                rows="3"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              />
+              <div className="mb-2">
+                <label htmlFor="ControlInput" className="form-label">
+                  Company Name
+                </label>
+                <Input
+                  className="form-control-model"
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={organisation}
+                  onChange={(e) => setOrganisation(e.target.value)}
+                />
+              </div>
             </div>
-          </form>
-          <form className="form-btn">
-            <button className="cancel-button" onClick={toggle}>
-              Cancel
-            </button>
-            <button className="submit-button" onClick={handleAddProject}>
-              Submit
-            </button>
+            <div className="form-btn">
+              <button className="cancel-button" onClick={toggle}>
+                Cancel
+              </button>
+              <button className="submit-button" type="submit">
+                Submit
+              </button>
+            </div>
           </form>
         </ModalBody>
       </Modal>
