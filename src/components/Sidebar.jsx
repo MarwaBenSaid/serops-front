@@ -31,11 +31,7 @@ const Sidebar = ({children}) => {
             icon:<AiOutlineFundProjectionScreen/>
                     
         }, 
-        {
-            path:"/organisations",
-            name:"Company",
-            icon:<ImOffice/>
-        },
+        
         {
             path:"/code",
             name:"Source codes",

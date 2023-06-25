@@ -16,10 +16,7 @@ import Auth from './layouts/Auth';
 import PrivateRoute from './utils/PrivateRoute';
 import AuthService , { AuthContext } from './services/auth.service';
 import Register from './components/Register';
-import Organisation from './pages/Organisation';
-import RegisterForm from './pages/RegisterForm';
 import UpdateProject from './pages/UpdateProject';
-import ForgetPassword from './components/UpdatePassword';
 import UpdatePassword from './components/UpdatePassword';
 import RegisterPart3 from './components/RegisterPart3';
 import { Navbar } from 'reactstrap';
@@ -34,7 +31,7 @@ const App = (props) => {
    
    
         <Routes>
-        <Route path="/register1"element={<RegisterForm/>} />
+      
               <Route path="/register" element={<Register/>} />
               <Route path="/register_verif" element={<RegisterPart3/>} />
               <Route path='/login' element={<Login/>} />
@@ -45,7 +42,6 @@ const App = (props) => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/projects" element={<Project />} />
               <Route path="/projects/update" element={<UpdateProject />} />
-              <Route path="/organisations" element={<Organisation />} />
               <Route path="/code" element={<Code />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/servers" element={<Server />} />

@@ -1,8 +1,7 @@
 .model {
     display: flex;
-    height: 100%;
     margin-top: 0px;
-    margin-left: 848px !important;
+    margin-left: 850px !important;
     background: #E9EDFC;
     box-sizing: border-box;
     flex-direction: column;
