@@ -32,7 +32,7 @@ AuthService.logout = ()=> {
 AuthService.getUser = () =>{
         let user = localStorage.getItem('user');
         if (user) {
-            return user;
+            return JSON.parse(user);
         } else {
             return false;
         }

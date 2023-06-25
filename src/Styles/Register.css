@@ -1,6 +1,3 @@
-@import url('https://www.cufonfonts.com/font/euclid-circular-a');
-
-
 .card-login {
 	/* RESET */
 	margin-left: 0px;
@@ -16,8 +13,8 @@
 
 
 .card-login a {
-	font-weight: 500;
-    margin-left: 166px;
+	font-weight: 600;
+    margin-left: 160px;
     margin-right: 0px;
 	text-decoration: none;
     font-size: 14px;
@@ -74,9 +71,8 @@ order: 1;
 
 
 .card-login h2 {
-	width: 350px;
+width: 350px;
 height: 34px;
-
 font-family: 'Euclid Circular A';
 font-style: normal;
 font-weight: 400;
@@ -326,13 +322,11 @@ flex-grow: 0;
 .card-login .link1{
 margin-right: 0px;
 font-family: 'Poppins';
-font-style: normal;
-font-weight: 700;
-font-size: 15px;
-line-height: 21px;
+font-style:normal;
+font-size: 32px;
+line-height: 27px;
 white-space: nowrap;
 display: flex;
-align-items: center;
 color: #2B47D6;
 margin-left: 110px;
 }

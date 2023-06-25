@@ -14,17 +14,15 @@ ApplicationService.update = (_id, data) => {
     return axios.put(BACKEND_HOST + "/Applications/" + _id, data, AuthService.authHeader());
 };
 
-ApplicationService.getAll = ()=> {
-    return axios.get(BACKEND_HOST + "/applications" , AuthService.authHeader());
+ApplicationService.filter = (data)=> {
+    return axios.post(BACKEND_HOST + "/applications/filter" ,data, AuthService.authHeader());
 };
 
-ApplicationService.getOne = (_id) => {
-    return axios.get(BACKEND_HOST + "/Applications/" + _id, AuthService.authHeader());
-};
-ApplicationService.deleteOne = (_id) => {
-    return axios.delete(BACKEND_HOST + "/Applications/" + _id, AuthService.authHeader());
+
+ApplicationService.filterByProject = (projectId) => {
+    const data = { id: projectId }; // Update the request body to match the expected format
+    return axios.post(BACKEND_HOST + "/applications/filter", data, AuthService.authHeader());
   };
-  
 
 
 export default ApplicationService;

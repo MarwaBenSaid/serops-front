@@ -21,6 +21,9 @@ ProjectService.getAll = ()=> {
 ProjectService.getOne = (_id) => {
     return axios.get(BACKEND_HOST + "/projects/" + _id, AuthService.authHeader());
 };
+ProjectService.search = (data) => {
+    return axios.get(BACKEND_HOST + "/projects/" + data, AuthService.authHeader());
+};
 ProjectService.deleteOne = (_id) => {
     return axios.delete(BACKEND_HOST + "/projects/" + _id, AuthService.authHeader());
   };

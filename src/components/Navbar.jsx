@@ -6,13 +6,15 @@ import AuthService from '../services/auth.service';
 function Navbar({ isOpen }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [username, setUsername] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = AuthService.getUser();
-    if (user) {
-     setUsername(user);
+    const userData = AuthService.getUser();
+    console.log(userData)
+    if (userData) {
+      setUser(userData);
+     
     }
   }, []);
 
@@ -29,7 +31,15 @@ function Navbar({ isOpen }) {
     setSelectedItem(item);
     setDropdownOpen(false);
   };
-    return (
+
+  const getFullName = () => {
+    if (user) {
+      return `${user.first_name} ${user.last_name}`;
+    }
+    return '';
+  };
+
+  return (
     <nav className={`navbar ${isOpen ? 'navbar-open' : 'navbar-closed'}`}>
       <ul className="navbar-nav">
         <li className={`nav-item ${dropdownOpen ? 'show' : ''}`} style={{ position: 'relative' }}>
@@ -43,7 +53,9 @@ function Navbar({ isOpen }) {
             aria-haspopup="true"
             aria-expanded={dropdownOpen ? 'true' : 'false'}
           >
-            <span className="mr-2 d-none d-lg-inline account-user-name text-gray-600 small">{username}</span>
+            <span className="mr-2 d-none d-lg-inline account-user-name text-gray-600 small">
+              {getFullName()}
+            </span>
             <img className="img-profile rounded-circle" src="../assets/images/users/avatar-3.jpg" alt="Profile" />
           </a>
           <div className={`dropdown-menu dropdown-menu-right ${dropdownOpen ? 'show' : ''}`} aria-labelledby="userDropdown">
