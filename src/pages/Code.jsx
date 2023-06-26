@@ -171,10 +171,10 @@ export default function Code() {
 
   return (
     <div>
-      <div className="container-project mt-5">
+      <div className="code-container mt-5">
         <div className="row">
           <div className="col-lg-6">
-            <h1 className="title-project">Code</h1>
+            <h1 className="title-project">Code Sources</h1>
             <button className='btn-add-project' onClick={toggle}>
               <i><Icon icon="material-symbols:add-box" /></i>
               Add Code
@@ -298,7 +298,7 @@ export default function Code() {
                   <p>{code.workspace}</p>
                   <p>{code.access_token}</p>
                   <p>{code.owner}</p>
-                  <p>
+                  
                   <i onClick={() => {
                     const updatedShowDropdown = [...showDropdown];
                     updatedShowDropdown[index] = !updatedShowDropdown[index];
@@ -307,7 +307,6 @@ export default function Code() {
                   }}>
                     <Icon class="server-icon" icon="fe:elipsis-v" color='blue' />
                   </i>
-                  </p>
                   {showDropdown[index] && selectedCode && (
                     <div className='code-dropdown'>
                       <ul className='drop-menu'>
